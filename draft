@@ -1,0 +1,6 @@
+part3: print_help.o
+	gcc wallet_stat.c -o part3
+print_help.o: 
+	gcc print_help.o
+clean:
+	rm -f part3
