@@ -29,7 +29,7 @@ int trace (int argc, char** argv){
 	//printf("COL: %d\n", col1);  
 
 	for (c = 0; c < row1; c++){
-		for (int d = 0; d < col1; d++){
+		for (d = 0; d < col1; d++){
 			fscanf(fp, "%d", &data1[c][d]);    
 		}
 	}
