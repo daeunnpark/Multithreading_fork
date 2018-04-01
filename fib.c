@@ -4,7 +4,6 @@
 #include <inttypes.h>
 #include <math.h>
 #define fib main
-#include <inttypes.h>
 
 uint64_t fib2(uint64_t n);
 

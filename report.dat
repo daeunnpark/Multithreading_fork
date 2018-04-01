@@ -10,7 +10,8 @@ For libraries, added
 #include <string.h> - for strcmp  
 #include <sys/types.h> - for fork()
 #include <unistd.h> - for execvp()
-##include <sys/wait.h> - for waitpid()
+#include <sys/wait.h> - for waitpid()
+#include <inttypes.h> - to print uint32_t into files
 
  void generate_wallets(struct wallets* wallet) -> void generate_wallets(struct wallets* wallet,int num_wallets)
 - To fix Segmentation default, pass the number of wallet as parameter
@@ -27,6 +28,15 @@ Added char *argv1[]={"./print_help", NULL}; to use as argument fr execvp();
 
 Added fclose(fp)
 - file was oepn and not closed
+
+While loop added
+- while(1) to make user to enter an existing filename, and when the file with user entered filename doesn't exist, print "FILE DOES NOT EXIST"
+
+print_wallets()
+- to print uint_32_t into files, added fprintf(fp, "%" PRIu32 "; money: ",wallet[i].key); 
+
+main()
+- printf("There is no wallet generated); added when user wants to print before generating wallet  
 
 print_help.o
 - At address 0x22, b8 -> bf to change instruction from eax -> edi.

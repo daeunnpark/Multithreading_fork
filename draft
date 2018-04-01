@@ -4,3 +4,57 @@ print_help.o:
 	gcc print_help.o
 clean:
 	rm -f part3
+ 
+part2: main.o solver 
+	gcc -o part2 main.o
+main.o: main.c
+	gcc -c main.c
+solver: solver.c
+	gcc solver.c -c
+	gcc solver.o main.c -o solver -lm
+clean:
+	rm -f part2 solver
+
+
+part2:
+	gcc main.c -o part2 -lm
+clean:
+	rm -f part2
+
+
+---------------------------------------
+trace:
+	gcc trace.c -o trace
+fib:
+	gcc fib.c -o fib
+-----------------------------------------
+part2: main.o solver 
+	gcc -o part2 main.o
+main.o: main.c header.h 
+	gcc -c main.c 
+solver: solver.c header.h
+	gcc solver.c -c
+	gcc solver.o main.c -o solver -lm
+clean:
+	rm -f part2 solver
+------------------------------------------
+part2: main.o solver 
+	gcc -o part2 main.o
+main.o: main.c header.h 
+	gcc -c main.c
+solver: solver.c header.h
+	gcc solver.c -c
+	gcc solver.o main.c -o solver -lm
+clean:
+	rm -f part2 solver
+
+
+
+
+
+
+/*
+   double f(int n, double *coefs, double x){
+
+
+
