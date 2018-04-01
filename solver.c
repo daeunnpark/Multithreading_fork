@@ -30,7 +30,8 @@ double solver (int argc, char** argv){
 	coefs = malloc((n+1)*sizeof(double));
 
 
-	for (int i=0; i<n+1;i++){
+	int i;
+	for (i=0; i<n+1;i++){
 		fscanf(fp, "%lf", &coefs[i]);
 		//	printf("coef : %f\n", coefs[i] );
 	}
