@@ -33,7 +33,7 @@ int main (int argc, char** argv){
 		fp = fopen(inputfilename, "r");
 
 		while(fp){	
-
+			//			app = malloc(sizeof(char)*10);
 			printf("ENTER THE NAME OF APP TO RUN\n");
 			scanf("%s",app);
 			pid_t pid = -10000;
@@ -69,7 +69,7 @@ int main (int argc, char** argv){
 
 
 			if( strcmp(app,"fib")==0 ){
-				N = malloc(sizeof(char)*100000);
+				N = malloc(sizeof(char)*10000000);
 				fscanf(fp,"%s", N); 
 
 				char *argv1[] = { "fib", N , NULL }; 
@@ -91,8 +91,8 @@ int main (int argc, char** argv){
 				exit(0);
 			}
 
-			
-if( strcmp(app,"change")==0 ){ 
+
+			if( strcmp(app,"change")==0 ){ 
 				fclose(fp); 
 				printf("PLEASE ENTER A NEW INPUT FILE NAME\n"); 
 				scanf("%s",inputfilename); 
@@ -124,6 +124,7 @@ if( strcmp(app,"change")==0 ){
 
 		}// while
 
+		free(app);
 	}
 
 	printf("FILE DOES NOT EXIST\n");

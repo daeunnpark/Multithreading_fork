@@ -57,8 +57,11 @@ int main(void) {
 	srand(time(NULL));
 
 	char* filename = (char*)malloc(255);
-	char* command = (char*)malloc(255);
+	//char* filename2 = (char*)malloc(400);
+	//strcpy(fielname2, );
+	char* command = (char*)malloc(300);
 	FILE* fp = NULL;
+	FILE* fp2 = NULL;
 	int num_wallets;
 	int is_generated = 0;
 	int is_printed = 0;
@@ -69,8 +72,9 @@ int main(void) {
 		printf("Please enter the file name that contains number of wallets: ");
 		scanf("%s", filename);
 		fp = fopen(filename, "r");
-		if(fp){
 
+
+		if(fp){
 
 			fscanf(fp, "%d", &num_wallets);
 			fclose(fp);
@@ -84,7 +88,6 @@ prompt:
 				pid = -10000;        
 				if ((pid = fork()) == 0) {
 					forkflag=1;
-					printf("tTT----\n");
 					char *argv1[]={"./print_help", NULL};
 					if( execvp(argv1[0],argv1) <0){
 						printf("ERROR in execvp\n");
@@ -120,10 +123,12 @@ prompt:
 				if (!is_printed) {
 					if(is_generated)	{		
 						is_printed = 1;
-						filename = "wallets_info.dat";
-						fp = fopen(filename, "w");
-						print_wallets(fp, num_wallets, wallet);
-						fclose(fp);        
+						//	filename2 = "wallets_info.dat";
+						//char* filename2 = (char*)malloc(400);
+
+						fp2 = fopen("wallets_info.dat", "w");
+						print_wallets(fp2, num_wallets, wallet);
+						fclose(fp2);        
 					}	
 					else{
 
@@ -134,19 +139,25 @@ prompt:
 				}	
 				goto prompt;
 			}
-			else if (strcmp(command, "quit") == 0)
-				return 0;
-			else {
+			else if (strcmp(command, "quit") == 0){
+				free(wallet);
+				break;				
+				//return 0;
+			}			else {
 				printf("Unknown command.\n");
 				goto prompt;
 			}
 
-
+			//free(wallet);
 		}
 		else{
 			printf("FILE DOES NOT EXIST\n"); 
 
 		}
 	}
+
+	free(filename);
+//	free(filename2);
+	free(command);
 	return 0;
 }
