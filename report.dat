@@ -13,32 +13,39 @@ For libraries, added
 #include <sys/wait.h> - for waitpid()
 #include <inttypes.h> - to print uint32_t into files
 
- void generate_wallets(struct wallets* wallet) -> void generate_wallets(struct wallets* wallet,int num_wallets)
-- To fix Segmentation default, pass the number of wallet as parameter
-
 wallet_stat.c
-fscanf("%s", filename); -> scanf("%s", filename);
-fscanf("%s", command); -> scanf("%s", command); 
-- the app should scan the user input and not file
-
-waitpid added
-- to prevent any zoombie from fork()
-
-Added char *argv1[]={"./print_help", NULL}; to use as argument fr execvp();
-
-Added fclose(fp)
-- file was oepn and not closed
-
-While loop added
-- while(1) to make user to enter an existing filename, and when the file with user entered filename doesn't exist, print "FILE DOES NOT EXIST"
+void generate_wallets(struct wallets* wallet) -> void generate_wallets(struct wallets* wallet,int num_wallets)
+- To fix Segmentation default, pass the number of wallet as parameter
 
 print_wallets()
 - to print uint_32_t into files, added fprintf(fp, "%" PRIu32 "; money: ",wallet[i].key); 
 
-main()
-- printf("There is no wallet generated); added when user wants to print before generating wallet  
+main()   
+While loop added
+- while(1) to make user to enter an existing filename, and when the file with user entered filename doesn't exist, print "FILE DOES NOT EXIST"
+
+fscanf("%s", filename); -> scanf("%s", filename);
+fscanf("%s", command); -> scanf("%s", command); 
+- the app should scan the user input and not file
+
+Added char *argv1[]={"./print_help", NULL}; to use as argument for execvp();
+
+Added fclose(fp)
+- file was oepn and not closed
+
+waitpid function added
+- to prevent any zoombie from fork()
+
+File pointer fp2 added
+- to fix memory leak from using one pointer for input filename and output filename 
+
+printf("There is no wallet generated); added 
+- when user wants to print before generating wallet, let user know that there is nothing to print
+
+free(filename),free(command), free(wallet) added
+- to fix memory leak after allocating memory
+- wallet pointer is only freed right before user choose to quit the application, whose wallet is already generated
 
 print_help.o
-- At address 0x22, b8 -> bf to change instruction from eax -> edi.
-
-
+At address 0x22, b8 -> bf to change instruction from eax -> edi.
+- to call print() correctly

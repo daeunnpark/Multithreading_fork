@@ -28,7 +28,6 @@ uint32_t key_gen() {
 
 uint32_t money_gen() {
 	uint32_t money = rand() % 100;
-
 	return money;
 }
 
@@ -57,8 +56,6 @@ int main(void) {
 	srand(time(NULL));
 
 	char* filename = (char*)malloc(255);
-	//char* filename2 = (char*)malloc(400);
-	//strcpy(fielname2, );
 	char* command = (char*)malloc(300);
 	FILE* fp = NULL;
 	FILE* fp2 = NULL;
@@ -93,7 +90,6 @@ prompt:
 						printf("ERROR in execvp\n");
 						exit(0);
 					}
-					printf("THIS MAYBe\n");
 				}
 
 				sleep(1);
@@ -123,8 +119,6 @@ prompt:
 				if (!is_printed) {
 					if(is_generated)	{		
 						is_printed = 1;
-						//	filename2 = "wallets_info.dat";
-						//char* filename2 = (char*)malloc(400);
 
 						fp2 = fopen("wallets_info.dat", "w");
 						print_wallets(fp2, num_wallets, wallet);
@@ -148,7 +142,6 @@ prompt:
 				goto prompt;
 			}
 
-			//free(wallet);
 		}
 		else{
 			printf("FILE DOES NOT EXIST\n"); 
@@ -157,7 +150,6 @@ prompt:
 	}
 
 	free(filename);
-//	free(filename2);
 	free(command);
 	return 0;
 }
