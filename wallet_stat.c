@@ -6,7 +6,6 @@
 #include <unistd.h> 
 #include <sys/wait.h>
 #include <inttypes.h> 
-
 #include <time.h>
 
 struct wallets {
@@ -21,8 +20,8 @@ uint32_t key_gen() {
 	key |= (rand() & 0xff) << 8;
 	key |= (rand() & 0xff) << 16;
 	key |= (rand() & 0xff) << 24;
-	printf("key");
-	printf("%" PRIu32 "\n", key);	
+	//	printf("key");
+	//	printf("%" PRIu32 "\n", key);	
 	return key;
 }
 
@@ -46,7 +45,6 @@ void print_wallets(FILE* fp, int num_wallets, struct wallets* wallet) {
 		fprintf(fp, "wallet: ");		
 		fprintf(fp, "%" PRIu32 "; money: ",wallet[i].key);
 		fprintf(fp, "%" PRIu32 "\n", wallet[i].money);
-
 		//	fprintf(fp, "wallet: %x; money: %d\n", wallet[i].key, wallet[i].key);
 	}
 }
@@ -56,7 +54,7 @@ int main(void) {
 	srand(time(NULL));
 
 	char* filename = (char*)malloc(255);
-	char* command = (char*)malloc(300);
+	char* command = (char*)malloc(255);
 	FILE* fp = NULL;
 	FILE* fp2 = NULL;
 	int num_wallets;
@@ -80,28 +78,36 @@ int main(void) {
 			printf("Type 'help' for list of available commands.\n");
 prompt:
 			printf("prompt> ");
-			scanf("%s", command);
+			int n = scanf("%s", command);
+
 			if (strcmp(command, "help") == 0) {
-				pid = -10000;        
-				if ((pid = fork()) == 0) {
-					forkflag=1;
+				pid = getpid();        
+
+				//printf("Current Process ID is : %d\n",pid);
+				//printf("[ Forking Child Process ... ] \n");
+
+				pid =fork();
+
+
+				if (pid == 0) { // child
 					char *argv1[]={"./print_help", NULL};
-					if( execvp(argv1[0],argv1) <0){
-						printf("ERROR in execvp\n");
+					execvp(argv1[0],argv1);
+
+					// iff it fails, returns here
+					printf("execvp failed");
+					exit(0);	
+				} else { // parent
+					//	printf("%d: going to sleep for a while - child %d might die while I snooze\n",(int)getpid(), (int)pid);
+					sleep(1);
+					int status; 
+//system("ps -eo pid,ppid,stat,cmd");
+					if( waitpid(pid,&status , 0)<0 ){ 
+						printf("ERROR IN WAITPID\n");
 						exit(0);
 					}
+system("ps -eo pid,ppid,stat,cmd");
+					//	printf("%d: awake\n", (int)getpid());
 				}
-
-				sleep(1);
-				if(forkflag){
-					int status; 
-					if( waitpid(pid,&status , 0)<0 ){ 
-						printf("ERROR IN WAITPID");
-					}
-
-					forkflag=0;
-				}
-				//execvp("./print_help", NULL);
 
 				goto prompt;
 			}
@@ -109,7 +115,6 @@ prompt:
 				if (!is_generated) {
 					is_generated = 1;
 					generate_wallets(wallet, num_wallets);
-					printf("DONE?\n");
 				}
 				else
 					printf("Wallets are already generated.\n");
@@ -137,19 +142,22 @@ prompt:
 				free(wallet);
 				break;				
 				//return 0;
-			}			else {
-				printf("Unknown command.\n");
-				goto prompt;
+}else if (n==0){
+
+					printf("NULL\n");
+				} else {
+					printf("Unknown command.\n");
+					goto prompt;
+				}
+
 			}
+			else{
+				printf("FILE DOES NOT EXIST\n"); 
 
+			}
 		}
-		else{
-			printf("FILE DOES NOT EXIST\n"); 
 
-		}
+		free(filename);
+		free(command);
+		return 0;
 	}
-
-	free(filename);
-	free(command);
-	return 0;
-}
