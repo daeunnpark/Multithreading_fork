@@ -100,12 +100,14 @@ prompt:
 					//	printf("%d: going to sleep for a while - child %d might die while I snooze\n",(int)getpid(), (int)pid);
 					sleep(1);
 					int status; 
-//system("ps -eo pid,ppid,stat,cmd");
+					//zombie here  
+					//system("ps -eo pid,ppid,stat,cmd"); 
 					if( waitpid(pid,&status , 0)<0 ){ 
 						printf("ERROR IN WAITPID\n");
 						exit(0);
 					}
-system("ps -eo pid,ppid,stat,cmd");
+					//no zoombie 
+					//system("ps -eo pid,ppid,stat,cmd"); 
 					//	printf("%d: awake\n", (int)getpid());
 				}
 
@@ -131,7 +133,7 @@ system("ps -eo pid,ppid,stat,cmd");
 					}	
 					else{
 
-						printf("There is no wallet generated.\n");
+						printf("No wallet is generated.\n");
 					}
 				} else {
 					printf("Wallets are already printed.\n");
@@ -142,22 +144,19 @@ system("ps -eo pid,ppid,stat,cmd");
 				free(wallet);
 				break;				
 				//return 0;
-}else if (n==0){
-
-					printf("NULL\n");
-				} else {
-					printf("Unknown command.\n");
-					goto prompt;
-				}
-
+			} else {
+				printf("Unknown command.\n");
+				goto prompt;
 			}
-			else{
-				printf("FILE DOES NOT EXIST\n"); 
 
-			}
 		}
+		else{
+			printf("FILE DOES NOT EXIST\n"); 
 
-		free(filename);
-		free(command);
-		return 0;
+		}
 	}
+
+	free(filename);
+	free(command);
+	return 0;
+}

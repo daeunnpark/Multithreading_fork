@@ -12,14 +12,13 @@ int main (int argc, char** argv){
 
 
 	if(argc<2){
-
 		printf("PLEASE ENTER A INPUT FILE\n");
 		exit(0);
 
 	} else {
 
 
-		printf("APP STARTS-------\n");
+		//	printf("APP STARTS-------\n");
 		char* app = malloc(sizeof(char)*10);		
 		int flag=0;
 		int status;	
@@ -33,13 +32,10 @@ int main (int argc, char** argv){
 		fp = fopen(inputfilename, "r");
 
 		while(fp){	
-			//			app = malloc(sizeof(char)*10);
 			printf("ENTER THE NAME OF APP TO RUN\n");
 			scanf("%s",app);
 			pid_t pid = -10000;
 			char *env1[] = { "PATH=/bin:/sbin", NULL };
-
-			printf("app: %s\n",app);
 
 			if( strcmp(app,"solver")==0 ){
 				char *argv1[] = { "solver", inputfilename , NULL };
@@ -51,6 +47,13 @@ int main (int argc, char** argv){
 						exit(0);
 					}
 
+				} else {
+					if( waitpid(pid,&status , 0)<0 ){  
+						printf("ERROR IN WAITPID\n");
+						exit(0);
+					}
+					// No zoombie   
+					// system("ps -eo pid,ppid,stat,cmd"); 
 				}
 
 			}
@@ -64,7 +67,15 @@ int main (int argc, char** argv){
 						printf("ERROR IN EXECVE\n");
 						exit(0);
 					}
+				} else {
+					if( waitpid(pid,&status , 0)<0 ){  
+						printf("ERROR IN WAITPID\n");
+						exit(0);
+					}
+					// No zoombie
+					// system("ps -eo pid,ppid,stat,cmd"); 
 				}
+
 			}
 
 
@@ -80,9 +91,18 @@ int main (int argc, char** argv){
 						printf("ERROR IN EXECVE\n");
 						exit(0);
 					}
+				} else { 
+					if( waitpid(pid,&status , 0)<0 ){  
+						printf("ERROR IN WAITPID\n");
+						exit(0);
+					}
+					// No zoombie   
+					// system("ps -eo pid,ppid,stat,cmd"); 
 				}
 
 			}
+
+
 
 			if( strcmp(app,"quit")==0 ){ 		
 
@@ -101,20 +121,20 @@ int main (int argc, char** argv){
 				fp = fopen(inputfilename, "r"); 
 
 			}
+			/*
 
 
+			   if( (strcmp(app,"solver")==0 ) ||  strcmp(app,"trace")==0 || ( strcmp(app,"fib")==0  )){
+			   if( waitpid(pid,&status , 0)<0 ){
+			   printf("ERRROR in waitpid\n");
 
-			if( (strcmp(app,"solver")==0 ) ||  strcmp(app,"trace")==0 || ( strcmp(app,"fib")==0  )){
-				if( waitpid(pid,&status , 0)<0 ){
-					printf("ERRROR in waitpid\n");
+			   } else {
+			   printf("DONE\n");
+			   }
+			   system("ps -eo pid,ppid,stat,cmd"); 
+			   }
 
-				} else {
-					printf("DONE\n");
-				}
-
-			}
-
-
+			 */
 
 			if( strcmp(app,"fib")==0 ){ 			
 				free(N);
@@ -128,7 +148,7 @@ int main (int argc, char** argv){
 	}
 
 	printf("FILE DOES NOT EXIST\n");
-	printf("ENDDD\n");
+	//	printf("ENDDD\n");
 	return 0;
 }
 
