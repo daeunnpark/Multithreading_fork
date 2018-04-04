@@ -1,19 +1,15 @@
 #ERROR REPORT
 
-# wallet_stat.c 
-# typography error 
-inlcude <time.h> -> include <time.h>
 
-
-# syn
 For libraries, added
 #include <string.h> - for strcmp  
 #include <sys/types.h> - for fork()
 #include <unistd.h> - for execvp()
 #include <sys/wait.h> - for waitpid()
 #include <inttypes.h> - to print uint32_t into files
+#inlcude <time.h> -> include <time.h> - correct typo   
 
-wallet_stat.c
+#wallet_stat.c
 void generate_wallets(struct wallets* wallet) -> void generate_wallets(struct wallets* wallet,int num_wallets)
 - To fix Segmentation default, pass the number of wallet as parameter
 
@@ -46,6 +42,6 @@ free(filename),free(command), free(wallet) added
 - to fix memory leak after allocating memory
 - wallet pointer is only freed right before user choose to quit the application, whose wallet is already generated
 
-print_help.o
+#print_help.o
 At address 0x22, b8 -> bf to change instruction from eax -> edi.
 - to call print() correctly

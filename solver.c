@@ -53,32 +53,27 @@ double solver (int argc, char** argv){
 
 
 double solver2(double A, double B, double e, int n, double *coefs){
-	double a =A;
+	double a = A;
 	double b = B;
 	double x = 0;
 
 	while(1){
 		x = (a+b)/2;
-
 		if( fabs(f(n,coefs,a)) < e){//f(n,coefs,a) 
 			return a;
 
 		} else if( fabs(f(n,coefs,b)) < e){
 			return b;
 
-		} else if( fabs(f(n,coefs,x)) < e){
+		} else if( fabs(f(n,coefs,x)) < e){	
 			return x;
 
 		} else {
-			if( f(n,coefs,a) * f(n,coefs,x)<0){
-				b=x;
+			if( f(n,coefs,x) * f(n,coefs,b)<0){
+				a=x;
 
 			} else {
-
-				if(f(n,coefs,x) * f(n,coefs,b)<0){
-					a=x;
-				}
-
+				b=x;
 			}
 		}
 	}
@@ -97,12 +92,12 @@ double f(int n, double *coefs, double x){
 	while(0<=n){
 
 		sum+=coefs[index]*pow(x,n);
-		//	printf("POLY : %f.4\n",coefs[index]*pow(x,n));
+		//printf("POLY : %f.4\n",coefs[index]*pow(x,n));
 
 		n--;
 		index++;
 	}
-
+	//printf("sum: %lf  ",sum);
 	return sum;
 
 }
