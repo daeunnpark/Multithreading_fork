@@ -34,7 +34,7 @@ int main (int argc, char** argv){
 		while(fp){	
 			printf("ENTER THE NAME OF APP TO RUN\n");
 			scanf("%s",app);
-			pid_t pid = -10000;
+			pid_t pid = getpid();;
 			char *env1[] = { "PATH=/bin:/sbin", NULL };
 
 			if( strcmp(app,"solver")==0 ){

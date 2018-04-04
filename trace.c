@@ -30,7 +30,6 @@ int trace (int argc, char** argv){
 
 	for (c = 0; c < row1; c++){
 		for (d = 0; d < col1; d++){
-
 			fscanf(fp, "%d", &data1[c][d]);    
 		}
 	}
